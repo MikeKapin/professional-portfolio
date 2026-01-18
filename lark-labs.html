@@ -94,22 +94,21 @@
             </p>
 
             <div style="max-width: 900px; margin: 0 auto 3rem;">
-                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
-                    <iframe
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-                        src="https://www.youtube-nocookie.com/embed/sseNt8XRb98"
-                        title="The Story Behind LARK Labs"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div style="text-align: center; margin-top: 1rem;">
-                    <a href="https://www.youtube.com/watch?v=sseNt8XRb98" target="_blank" rel="noopener"
-                       style="display: inline-block; padding: 0.75rem 1.5rem; background: rgba(102, 126, 234, 0.2); color: var(--text-color); text-decoration: none; border-radius: 8px; border: 1px solid var(--glass-border); font-weight: 600; transition: transform 0.3s;">
-                        🎬 Watch on YouTube
-                    </a>
-                </div>
+                <a href="https://www.youtube.com/watch?v=sseNt8XRb98" target="_blank" rel="noopener"
+                   style="display: block; position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2); transition: transform 0.3s; text-decoration: none;"
+                   onmouseover="this.style.transform='scale(1.02)'"
+                   onmouseout="this.style.transform='scale(1)'">
+                    <img src="https://img.youtube.com/vi/sseNt8XRb98/maxresdefault.jpg"
+                         alt="The Story Behind LARK Labs - Video Thumbnail"
+                         style="width: 100%; height: auto; display: block;">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80px; height: 80px; background: rgba(255, 0, 0, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+                        <div style="width: 0; height: 0; border-left: 25px solid white; border-top: 15px solid transparent; border-bottom: 15px solid transparent; margin-left: 8px;"></div>
+                    </div>
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 1.5rem; color: white;">
+                        <h3 style="margin: 0; font-size: 1.3rem;">🎬 The Story Behind LARK Labs</h3>
+                        <p style="margin: 0.5rem 0 0; opacity: 0.9; font-size: 0.95rem;">Click to watch on YouTube</p>
+                    </div>
+                </a>
             </div>
 
             <div class="info-box">
