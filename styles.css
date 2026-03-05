@@ -1292,6 +1292,18 @@ body.page-contact .hero {
         background-attachment: scroll;
     }
 
+    /* Focal-point fixes: cover on portrait mobile zooms in hard on landscape images.
+       Each value is tuned to keep the primary subject visible. */
+    body.page-home .hero {
+        background-position: 25% center; /* face is left-third of composite image */
+    }
+    body.page-about .hero {
+        background-position: 40% top;   /* face slightly left of center in headshot */
+    }
+    body.page-experience .hero {
+        background-position: 20% center; /* instructor is at left of classroom scene */
+    }
+
     /* Adjust homepage hero intro section for mobile */
     .hero-intro {
         padding: 3rem 1.5rem;
