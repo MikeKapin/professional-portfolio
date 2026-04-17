@@ -13,8 +13,32 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://mikekapin.com/writing/bridging-traditional-hvac-education-and-modern-technology/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://mikekapin.com/writing/why-i-build-small-software/</loc>
     <lastmod>2026-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mikekapin.com/writing/ai-doesnt-take-jobs-leverage-does/</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mikekapin.com/writing/what-ai-doesnt-know-about-your-team/</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mikekapin.com/writing/ai-and-the-bottleneck-problem/</loc>
+    <lastmod>2026-01-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>

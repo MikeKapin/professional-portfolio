@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>AI and the bottleneck problem &mdash; Mike Kapin</title>
+<meta name="description" content="Why speeding up the wrong part of a workflow makes everything worse, and what to fix first." />
+<meta name="theme-color" content="#faf6ef" />
+<meta property="og:title" content="AI and the bottleneck problem" />
+<meta property="og:description" content="Why speeding up the wrong part of a workflow makes everything worse, and what to fix first." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mikekapin.com/writing/ai-and-the-bottleneck-problem/" />
+<meta property="article:published_time" content="2026-01-15" />
+<meta property="article:author" content="Mike Kapin" />
+<link rel="canonical" href="https://mikekapin.com/writing/ai-and-the-bottleneck-problem/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23faf6ef'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%232e4a3c'%3Emk%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #faf6ef;
+    --surface: #f3ede1;
+    --ink: #1f1d1a;
+    --ink-soft: #4a4641;
+    --ink-muted: #8a8378;
+    --accent: #2e4a3c;
+    --accent-soft: #3e6250;
+    --rule: rgba(31, 29, 26, 0.08);
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(46, 74, 60, 0.28); transition: border-color .18s ease, color .18s ease; }
+  a:hover { border-bottom-color: var(--accent); color: var(--accent-soft); }
+
+  .reading { max-width: 660px; margin: 0 auto; padding: 0 28px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
+
+  .topbar {
+    padding: 2rem 0 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .site-mark {
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: none;
+  }
+  .site-mark:hover { color: var(--accent); border-bottom: none; }
+  .back-link {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    border-bottom: none;
+    letter-spacing: 0.04em;
+  }
+  .back-link:hover { color: var(--accent); border-bottom: none; }
+
+  article { padding: 4.5rem 0 5rem; }
+
+  .post-meta {
+    text-align: center;
+    margin: 0 0 2rem;
+  }
+  .post-kicker {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 1.25rem;
+    font-weight: 500;
+  }
+  .post-h1 {
+    font-size: clamp(2.2rem, 4.6vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 auto 1.25rem;
+    max-width: 20ch;
+    text-align: center;
+  }
+  .post-standfirst {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+    line-height: 1.55;
+    margin: 0 auto 2.5rem;
+    max-width: 52ch;
+    text-align: center;
+  }
+  .post-rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    width: 3rem;
+    margin: 0 auto 3rem;
+  }
+
+  .prose p {
+    font-size: 1.12rem;
+    line-height: 1.78;
+    color: var(--ink-soft);
+    margin: 0 0 1.55rem;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose em { font-style: italic; color: var(--ink); }
+  .prose strong { color: var(--ink); font-weight: 500; }
+  .prose p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 4.4em;
+    line-height: 0.82;
+    float: left;
+    padding: 0.08em 0.14em 0 0;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .prose h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin: 3rem 0 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .prose hr.section-break {
+    border: 0;
+    text-align: center;
+    margin: 2.5rem 0;
+    color: var(--ink-muted);
+  }
+  .prose hr.section-break::before {
+    content: "· · ·";
+    letter-spacing: 0.5em;
+    font-size: 1rem;
+  }
+
+  .post-bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  .post-bottom a {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  footer {
+    padding: 3.5rem 0 4.5rem;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    color: var(--ink-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .disclaimer {
+    max-width: 760px;
+    margin: 0 0 1.5rem;
+    color: var(--ink-soft);
+  }
+  .disclaimer strong { color: var(--ink); font-weight: 500; }
+  .copyright { margin: 0; }
+
+  @media (max-width: 560px) {
+    article { padding: 3rem 0 3.5rem; }
+    .prose p:first-of-type::first-letter {
+      font-size: 3.8em;
+      padding: 0.06em 0.12em 0 0;
+    }
+    .prose p { font-size: 1.05rem; line-height: 1.72; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="site-mark" href="/">Mike Kapin</a>
+      <a class="back-link" href="/writing/">&larr; Writing</a>
+    </div>
+  </div>
+
+  <article>
+    <div class="reading">
+      <header class="post-meta">
+        <p class="post-kicker">January 15, 2026</p>
+        <h1 class="post-h1">AI and the bottleneck problem</h1>
+        <p class="post-standfirst">Why speeding up the wrong part of a workflow makes everything worse, and what to fix first.</p>
+        <hr class="post-rule" />
+      </header>
+
+      <div class="prose">
+<p>Most of the AI automation I see in small businesses is broken in the same way. Not because the technology doesn't work — it works fine. It's broken because it's been pointed at the wrong part of the problem.</p>
+
+        <p>Here's the pattern. A business owner reads something about AI. They look at their operation and pick whatever feels easiest to automate — usually the thing they already understand well enough to describe to a developer. Invoicing, maybe. Or a chatbot on the website. Or email sorting. Something tidy. They spend money on it, they get it working, and then they wait for the transformation.</p>
+
+        <p>It doesn't come. Or it comes in a form they didn't expect: the newly automated step now runs ten times faster than the step after it, and the whole workflow jams up at the next bottleneck. Work that used to queue up on Friday now queues up on Tuesday. The bottleneck didn't disappear. It moved.</p>
+
+        <p>This is Theory of Constraints applied to AI implementation, and it's not a complicated idea. Every workflow has one real constraint — one step that governs the pace of the whole system. If you don't know which step that is, automating any other step is at best pointless and at worst actively harmful. You've made a broken system faster. Instead of breaking three things, it now breaks thirty. In the same amount of time it used to take to break three.</p>
+
+        <p>The reason this mistake is so common is that it's easier to automate what's easy than to diagnose what's broken. Diagnosing the real constraint means watching the work, talking to the people who do it, and being honest about where the delays actually live. That's slow, uncomfortable work. Buying an AI tool is fast and feels like progress.</p>
+
+        <p>What strategic AI implementation actually looks like is boring. You find the one step that governs everything else. You improve that step — sometimes with AI, sometimes with a process change, sometimes just by giving one person a clearer job. You watch the whole workflow respond. Then you find the next constraint — because there always is one — and you do it again.</p>
+
+        <p>That's it. That's the whole method.</p>
+
+        <p>It's not a sales pitch. It's not complicated enough to charge a lot of money for. It doesn't require a custom AI model or an agentic framework or a six-figure platform. It requires paying attention to your own business and being willing to see it clearly.</p>
+
+        <p>Which, in practice, is why most businesses don't do it. Paying attention is harder than buying software.</p>
+
+        <p>I built my first automations to solve my own bottleneck — the paperwork at the end of a teaching day, the same way I used to hate Friday invoicing when I ran a service business. I didn't automate everything. I automated the one thing that was choking the rest of the week. When that unblocked, the next constraint showed up. Then the next. Each one smaller than the last.</p>
+
+        <p>If you're thinking about AI for your business and you're not sure where to start, start by watching your own week. Find the step where the work piles up. That's where the leverage is. Everything else is noise.</p>
+      </div>
+
+      <div class="post-bottom">
+        <a href="/writing/">&larr; Back to Writing</a>
+      </div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container">
+      <p class="disclaimer"><strong>Professional Disclaimer:</strong> All views and projects presented are personal and do not represent the positions or policies of any employer or institution. All projects are developed on personal time using personal resources and are separate from institutional employment.</p>
+      <p class="copyright">&copy; 2026 Mike Kapin</p>
+    </div>
+  </footer>
+
+</body>
+</html>

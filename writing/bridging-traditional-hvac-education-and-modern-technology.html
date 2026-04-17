@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Bridging traditional HVAC education with modern technology &mdash; Mike Kapin</title>
+<meta name="description" content="Why the future of HVAC training isn't choosing between hands-on craft and digital tools, but learning when each belongs." />
+<meta name="theme-color" content="#faf6ef" />
+<meta property="og:title" content="Bridging traditional HVAC education with modern technology" />
+<meta property="og:description" content="Why the future of HVAC training isn't choosing between hands-on craft and digital tools, but learning when each belongs." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mikekapin.com/writing/bridging-traditional-hvac-education-and-modern-technology/" />
+<meta property="article:published_time" content="2026-04-17" />
+<meta property="article:author" content="Mike Kapin" />
+<link rel="canonical" href="https://mikekapin.com/writing/bridging-traditional-hvac-education-and-modern-technology/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23faf6ef'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%232e4a3c'%3Emk%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #faf6ef;
+    --surface: #f3ede1;
+    --ink: #1f1d1a;
+    --ink-soft: #4a4641;
+    --ink-muted: #8a8378;
+    --accent: #2e4a3c;
+    --accent-soft: #3e6250;
+    --rule: rgba(31, 29, 26, 0.08);
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(46, 74, 60, 0.28); transition: border-color .18s ease, color .18s ease; }
+  a:hover { border-bottom-color: var(--accent); color: var(--accent-soft); }
+
+  .reading { max-width: 660px; margin: 0 auto; padding: 0 28px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
+
+  .topbar {
+    padding: 2rem 0 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .site-mark {
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: none;
+  }
+  .site-mark:hover { color: var(--accent); border-bottom: none; }
+  .back-link {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    border-bottom: none;
+    letter-spacing: 0.04em;
+  }
+  .back-link:hover { color: var(--accent); border-bottom: none; }
+
+  article { padding: 4.5rem 0 5rem; }
+
+  .post-meta {
+    text-align: center;
+    margin: 0 0 2rem;
+  }
+  .post-kicker {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 1.25rem;
+    font-weight: 500;
+  }
+  .post-h1 {
+    font-size: clamp(2.2rem, 4.6vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 auto 1.25rem;
+    max-width: 20ch;
+    text-align: center;
+  }
+  .post-standfirst {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+    line-height: 1.55;
+    margin: 0 auto 2.5rem;
+    max-width: 52ch;
+    text-align: center;
+  }
+  .post-rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    width: 3rem;
+    margin: 0 auto 3rem;
+  }
+
+  .prose p {
+    font-size: 1.12rem;
+    line-height: 1.78;
+    color: var(--ink-soft);
+    margin: 0 0 1.55rem;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose em { font-style: italic; color: var(--ink); }
+  .prose strong { color: var(--ink); font-weight: 500; }
+  .prose p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 4.4em;
+    line-height: 0.82;
+    float: left;
+    padding: 0.08em 0.14em 0 0;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .prose h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin: 3rem 0 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .prose hr.section-break {
+    border: 0;
+    text-align: center;
+    margin: 2.5rem 0;
+    color: var(--ink-muted);
+  }
+  .prose hr.section-break::before {
+    content: "· · ·";
+    letter-spacing: 0.5em;
+    font-size: 1rem;
+  }
+
+  .post-bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  .post-bottom a {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  footer {
+    padding: 3.5rem 0 4.5rem;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    color: var(--ink-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .disclaimer {
+    max-width: 760px;
+    margin: 0 0 1.5rem;
+    color: var(--ink-soft);
+  }
+  .disclaimer strong { color: var(--ink); font-weight: 500; }
+  .copyright { margin: 0; }
+
+  @media (max-width: 560px) {
+    article { padding: 3rem 0 3.5rem; }
+    .prose p:first-of-type::first-letter {
+      font-size: 3.8em;
+      padding: 0.06em 0.12em 0 0;
+    }
+    .prose p { font-size: 1.05rem; line-height: 1.72; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="site-mark" href="/">Mike Kapin</a>
+      <a class="back-link" href="/writing/">&larr; Writing</a>
+    </div>
+  </div>
+
+  <article>
+    <div class="reading">
+      <header class="post-meta">
+        <p class="post-kicker">April 17, 2026</p>
+        <h1 class="post-h1">Bridging traditional HVAC education with modern technology</h1>
+        <p class="post-standfirst">Why the future of trade training isn't choosing between hands-on craft and digital tools — it's learning when each belongs.</p>
+        <hr class="post-rule" />
+      </header>
+
+      <div class="prose">
+<p>The HVAC trade is at a moment that doesn't happen often. The fundamentals that define the work — heat transfer, combustion, refrigeration, electrical diagnostics — haven't changed, and probably won't in my lifetime. But almost everything around those fundamentals is changing at once: the equipment is smarter, the diagnostics are more software-driven, the code is evolving faster, the customers expect more, and the students we're training came up in a different world from the one that trained me.</p>
+
+        <p>The question isn't whether to update how we teach. The industry is already forcing that conversation. The question is how to update it without losing what made the traditional approach work.</p>
+
+        <p>Because the traditional approach did work, and still does. A good apprentice learns by watching someone with experience, by doing the work badly for a while, by getting corrected, and by doing it again. That pattern — observation, practice, feedback, repetition — is how every trade has produced competent people for as long as trades have existed. Nothing about new technology changes that pattern. Anyone selling you a digital platform that replaces hands-on mentorship is selling you a story.</p>
+
+        <p>What digital tools <em>can</em> do, used well, is extend the edges of that pattern. More reps. Safer reps. Reps that happen outside the constraints of a shop schedule or a classroom period.</p>
+
+        <p>A student who spends an hour working through an interactive simulation of a gas valve sequence isn't replacing a hand on the valve — but they're arriving at the bench with the sequence already in their head, which means the shop time is spent on the things that only hands can teach. A tech on a job site who can pull up a code clause in ten seconds on their phone isn't skipping the code book; they're using the book differently, the way every other profession uses reference material in the field. An apprentice who can ask an AI tutor a question at 10 PM when they're stuck isn't replacing the instructor — they're getting a response in the moment their brain is actually engaged with the problem, instead of three days later when the class meets.</p>
+
+        <p>None of that replaces the trade. All of it supplements it. And supplementing it well is harder than either side of the debate wants to admit.</p>
+
+        <p>The failure modes are real. Used badly, digital tools become a way for students to avoid the discomfort of struggling through a problem — and struggling through a problem is where the learning lives. An AI that gives a student the answer too quickly teaches them nothing. A reference tool that's always open on the phone stops being a reference and starts being a crutch. A simulation that's too forgiving of mistakes doesn't prepare anyone for a real service call where mistakes have consequences.</p>
+
+        <p>What I've learned, teaching through this transition, is that the tools themselves are neutral. What matters is the intention behind how they're used. A student using an AI tutor to work through a problem they don't understand is being a better student. A student using an AI tutor to generate the answer so they can hand in the assignment is being a worse one. Same tool. Different outcome.</p>
+
+        <p>The programs that are going to produce the best techs over the next ten years — and I believe this strongly — are going to be the ones that integrate digital tools thoughtfully rather than either reflexively embracing them or reflexively rejecting them. Neither position does the student any good. The student doesn't care about the instructor's opinion on AI. The student cares about becoming a competent tech, and they're going to use whatever tools help them get there — with guidance or without it.</p>
+
+        <p>That's the part that I think gets missed in the conversation about technology in trades education. The students are going to use these tools regardless. They're already using them. The question for instructors isn't whether to allow them — that decision has already been made by the devices in their pockets. The question is whether we're going to teach them how to use them well, or leave them to figure it out on their own and inherit whatever bad habits they pick up along the way.</p>
+
+        <p>I lean toward teaching. Partly because that's what I've spent the last decade doing, and partly because leaving something important to chance has never struck me as a coherent strategy. If digital tools are going to be part of the trade — and they clearly are — then learning to use them carefully is part of learning the trade. That's not a dilution of the craft. That's an expansion of it.</p>
+
+        <p>What doesn't change is the center of gravity. Hands on equipment. Safety on gas systems. A mentor who's done the work. A student who's willing to struggle until they understand. Those are the constants. Everything else — the simulations, the code lookups, the tutors, the automated grading, the diagnostic aids — is scaffolding around those constants. Useful scaffolding, when the scaffolding is well-built. Dangerous scaffolding when it's mistaken for the thing itself.</p>
+
+        <p>The next generation of Canadian gas technicians is going to come up through a program that looks different from the one I went through. That's fine. Every generation's training has looked different from the one before it. What I hope — what I'm trying to build toward, in my small corner of the work — is that the difference is additive rather than replacing. More ways to learn, not fewer. Better tools for the moments that benefit from them, and the same patient hands-on instruction for the moments that don't.</p>
+
+        <p>The trade deserves both. The students deserve both. And the customers — the ones who just want their house warm in January — are counting on the trade to figure this out.</p>
+      </div>
+
+      <div class="post-bottom">
+        <a href="/writing/">&larr; Back to Writing</a>
+      </div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container">
+      <p class="disclaimer"><strong>Professional Disclaimer:</strong> All views and projects presented are personal and do not represent the positions or policies of any employer or institution. All projects are developed on personal time using personal resources and are separate from institutional employment.</p>
+      <p class="copyright">&copy; 2026 Mike Kapin</p>
+    </div>
+  </footer>
+
+</body>
+</html>
