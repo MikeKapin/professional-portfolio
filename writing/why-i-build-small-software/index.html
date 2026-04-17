@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Why I build small software &mdash; Mike Kapin</title>
+<meta name="description" content="On hobby code, AI as a collaborator, and the case for building things that solve exactly one problem." />
+<meta name="theme-color" content="#faf6ef" />
+<meta property="og:title" content="Why I build small software" />
+<meta property="og:description" content="On hobby code, AI as a collaborator, and the case for building things that solve exactly one problem." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mikekapin.com/writing/why-i-build-small-software/" />
+<meta property="article:published_time" content="2026-04-16" />
+<meta property="article:author" content="Mike Kapin" />
+<link rel="canonical" href="https://mikekapin.com/writing/why-i-build-small-software/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23faf6ef'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%232e4a3c'%3Emk%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #faf6ef;
+    --surface: #f3ede1;
+    --ink: #1f1d1a;
+    --ink-soft: #4a4641;
+    --ink-muted: #8a8378;
+    --accent: #2e4a3c;
+    --accent-soft: #3e6250;
+    --rule: rgba(31, 29, 26, 0.08);
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(46, 74, 60, 0.28); transition: border-color .18s ease, color .18s ease; }
+  a:hover { border-bottom-color: var(--accent); color: var(--accent-soft); }
+
+  .reading { max-width: 660px; margin: 0 auto; padding: 0 28px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
+
+  /* Top bar */
+  .topbar {
+    padding: 2rem 0 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .site-mark {
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: none;
+  }
+  .site-mark:hover { color: var(--accent); border-bottom: none; }
+  .back-link {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    border-bottom: none;
+    letter-spacing: 0.04em;
+  }
+  .back-link:hover { color: var(--accent); border-bottom: none; }
+
+  /* Article */
+  article { padding: 4.5rem 0 5rem; }
+
+  .post-meta {
+    text-align: center;
+    margin: 0 0 2rem;
+  }
+  .post-kicker {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 1.25rem;
+    font-weight: 500;
+  }
+  .post-h1 {
+    font-size: clamp(2.2rem, 4.6vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 auto 1.25rem;
+    max-width: 18ch;
+    text-align: center;
+  }
+  .post-standfirst {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+    line-height: 1.55;
+    margin: 0 auto 2.5rem;
+    max-width: 48ch;
+    text-align: center;
+  }
+  .post-rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    width: 3rem;
+    margin: 0 auto 3rem;
+  }
+
+  .prose p {
+    font-size: 1.12rem;
+    line-height: 1.78;
+    color: var(--ink-soft);
+    margin: 0 0 1.55rem;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose em { font-style: italic; color: var(--ink); }
+  .prose p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 4.4em;
+    line-height: 0.82;
+    float: left;
+    padding: 0.08em 0.14em 0 0;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .post-bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  .post-bottom a {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  /* Footer */
+  footer {
+    padding: 3.5rem 0 4.5rem;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    color: var(--ink-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .disclaimer {
+    max-width: 760px;
+    margin: 0 0 1.5rem;
+    color: var(--ink-soft);
+  }
+  .disclaimer strong { color: var(--ink); font-weight: 500; }
+  .copyright { margin: 0; }
+
+  @media (max-width: 560px) {
+    article { padding: 3rem 0 3.5rem; }
+    .prose p:first-of-type::first-letter {
+      font-size: 3.8em;
+      padding: 0.06em 0.12em 0 0;
+    }
+    .prose p { font-size: 1.05rem; line-height: 1.72; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="site-mark" href="/">Mike Kapin</a>
+      <a class="back-link" href="/writing/">&larr; Writing</a>
+    </div>
+  </div>
+
+  <article>
+    <div class="reading">
+      <header class="post-meta">
+        <p class="post-kicker">April 16, 2026</p>
+        <h1 class="post-h1">Why I build small software</h1>
+        <p class="post-standfirst">On hobby code, AI as a collaborator, and the case for building things that solve exactly one problem.</p>
+        <hr class="post-rule" />
+      </header>
+
+      <div class="prose">
+        <p>There's a particular kind of software I keep coming back to. Small. Single-purpose. Built for one person &mdash; usually me &mdash; to solve one specific problem. Not a platform. Not a SaaS. Not something that needs a team or a pitch deck or a freemium tier. Just a tool.</p>
+
+        <p>I came to software sideways. I'm a tradesperson by training &mdash; twenty years in heating and cooling, a decade teaching the trade. Code was never supposed to be my work. But somewhere around 2023 I noticed that the gap between &ldquo;I have an idea for a tool&rdquo; and &ldquo;I have the tool I imagined&rdquo; had collapsed. AI made that possible in a way that wasn't true before. A problem I might have lived with for years &mdash; enough friction to be annoying, not enough to justify hiring a developer &mdash; could now become an afternoon's build.</p>
+
+        <p>So I started building. A health tracker, because the existing ones asked too much and told me too little. A communication toolkit, because I was trying to be more intentional in a relationship and found the existing apps preachy or gamified. A quoting app for the kind of small contractor work I used to do. A co-parenting calendar, because the scheduling between two households was eating more mental space than the actual parenting. Each one took days, not months. Each one solves a problem I was actually having.</p>
+
+        <p>What surprised me wasn't that the building got easier. It was what happened to my relationship with software. When the cost of making something is low, you stop thinking of software as a <em>product</em> and start thinking of it as a <em>craft</em>. You build the tool you need, you use it, you iterate. There's no funding round, no pivot, no pitch. The tool works or it doesn't. If it doesn't, you fix it. If it does, you move on to the next problem.</p>
+
+        <p>That way of working feels closer to how I think about HVAC than how I think about tech. In the trade, you don't ship MVPs &mdash; you fix the furnace. The job is done when the house is warm, and there's a dignity in that kind of work that the software industry lost somewhere along the way, if it ever had it.</p>
+
+        <p>I build small software because I like it. I share the ones that turned out useful because some of them might solve the same problem for someone else. Nothing on this site is a product. There's no company behind it. There's no pitch. It's a man in Ontario with a day job and a habit of building things, putting the ones that worked where other people can find them.</p>
+
+        <p>If that resonates with you, read around. If not, no hard feelings. The furnace is warm either way.</p>
+      </div>
+
+      <div class="post-bottom">
+        <a href="/writing/">&larr; Back to Writing</a>
+      </div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container">
+      <p class="disclaimer"><strong>Professional Disclaimer:</strong> All views and projects presented are personal and do not represent the positions or policies of any employer or institution. All projects are developed on personal time using personal resources and are separate from institutional employment.</p>
+      <p class="copyright">&copy; 2026 Mike Kapin</p>
+    </div>
+  </footer>
+
+</body>
+</html>

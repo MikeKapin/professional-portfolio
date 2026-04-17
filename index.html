@@ -358,6 +358,108 @@
     section { padding: 4.5rem 0; }
     .app { padding: 1.75rem 1.5rem 1.5rem; min-height: 0; }
   }
+
+  /* About — long-form biography */
+  .bio p {
+    font-size: 1.08rem;
+    line-height: 1.78;
+    color: var(--ink-soft);
+    margin: 0 0 1.4rem;
+  }
+  .bio p:last-child { margin-bottom: 0; }
+  .bio p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 4.4em;
+    line-height: 0.84;
+    float: left;
+    padding: 0.08em 0.14em 0 0;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .bio-divider {
+    text-align: center;
+    margin: 2.5rem 0;
+    color: var(--ink-muted);
+    letter-spacing: 0.7em;
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    user-select: none;
+  }
+  @media (max-width: 560px) {
+    .bio p:first-of-type::first-letter {
+      font-size: 3.8em;
+      padding: 0.06em 0.12em 0 0;
+    }
+  }
+
+  /* Writing */
+  .writing { background: var(--bg); }
+  .writing h2 {
+    font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .writing .lede {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    margin: 0 0 3rem;
+  }
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .post-item {
+    border-top: 1px solid var(--rule);
+    padding: 1.75rem 0;
+  }
+  .post-item:last-child { border-bottom: 1px solid var(--rule); }
+  .post-link {
+    display: block;
+    border-bottom: none;
+    color: inherit;
+  }
+  .post-link:hover { border-bottom: none; }
+  .post-link:hover .post-title { color: var(--accent); }
+  .post-date {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 0.6rem;
+    font-weight: 500;
+  }
+  .post-title {
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    line-height: 1.22;
+    margin: 0 0 0.55rem;
+    color: var(--ink);
+    letter-spacing: -0.012em;
+    transition: color .18s ease;
+  }
+  .post-standfirst {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+
+  /* Background — italic lead line under header */
+  .bg-lead {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    margin: -1.25rem 0 3rem;
+    line-height: 1.6;
+    max-width: 58ch;
+  }
 </style>
 </head>
 <body>
@@ -375,10 +477,27 @@
   <section class="about" id="about">
     <div class="container">
       <p class="section-label fade-up">About</p>
-      <h2 class="fade-up d1">A builder, quietly.</h2>
-      <p class="fade-up d1">I'm Mike. I live in Ontario, teach at a local college as a program coordinator in the skilled trades, and spend a lot of my non-work time building software.</p>
-      <p class="fade-up d2">Most of what I make starts with a problem I'm trying to solve for myself — tracking my own health, managing a complicated co-parenting schedule, quoting contractor work, figuring out how to use AI in my own workflow. When something turns out well enough that other people might find it useful, I put it here.</p>
-      <p class="fade-up d3">This site is personal. Nothing on it is for sale. There are no accounts to create, no paywalls, no pitch. If a tool here helps you, take it and use it.</p>
+      <h2 class="fade-up d1">About</h2>
+      <div class="bio">
+        <p class="fade-up d1">I grew up expecting to work with my hands. Ontario, practical upbringing, the kind of childhood where you learned to fix things because nobody was going to fix them for you. By the time I was old enough to choose a trade, HVAC was the obvious one &mdash; a mix of problem-solving, physical work, and the kind of responsibility that comes from being the person a family calls when the furnace stops in January.</p>
+        <p class="fade-up d1">I spent my twenties and most of my thirties in the field. Residential heating and cooling, gas work, refrigeration, service calls, installs, emergencies, the whole arc. In 2011 I started my own business &mdash; Mike's Heating and Home Comfort &mdash; and ran it for eleven years. That period taught me more than any course could have: how to read a system, how to price work honestly, how to explain technical problems to people who just wanted their house warm, how to keep a small business alive through slow seasons and bad winters. I'm proud of the work I did in those years, and prouder still of the reputation the business earned.</p>
+
+        <div class="bio-divider fade-up" aria-hidden="true">&middot; &middot; &middot;</div>
+
+        <p class="fade-up">In 2017 I took a part-time teaching role at Fanshawe College alongside running the business. I thought it would be a side interest. It wasn't. Teaching turned out to be one of the most rewarding things I've ever done &mdash; watching someone go from confused to competent, watching an apprentice's face when a concept finally clicks, being the person who makes the trade make sense to the next generation. By 2020 I was coordinating the program. By 2022 I had wound down the business to focus on teaching full-time.</p>
+        <p class="fade-up">These days I'm a program coordinator in the skilled trades at Fanshawe's Woodstock campus, teaching gas technology and coordinating apprenticeships. Twenty-plus years of field experience informs everything I do in the classroom. I hold G2 and G3 licenses, I follow the Canadian gas code closely, and I still believe the best teachers are the ones who've actually done the work.</p>
+
+        <div class="bio-divider fade-up" aria-hidden="true">&middot; &middot; &middot;</div>
+
+        <p class="fade-up">Somewhere in the middle of all that, software happened.</p>
+        <p class="fade-up">I'd been a tinkerer since I was a kid &mdash; the kind who took apart go-carts in the driveway, rebuilt small engines because it was satisfying to see them come back to life, restored muscle cars through my teens and twenties. Always good with my hands. When AI tools started becoming genuinely capable in 2023 and 2024, I got curious. I started building small software tools for myself: a tutor that could help me think through problems, a calculator for jobs I used to do by hand, a scheduler for the chaos of co-parenting and a full-time job. What started as curiosity became a genuine practice. I learned to use Claude as a collaborator, to write real code, to architect systems, to connect AI to the rest of the tools a person uses in a day. I'm not a formally trained software developer &mdash; I'm a tradesperson who figured out that the same instincts that make you good at fixing a furnace or rebuilding a carburetor make you good at debugging code. Systems are systems.</p>
+        <p class="fade-up">Now I build software the way I used to rebuild engines &mdash; the same hands, the same instinct, different medium. I do it as a hobby, for the satisfaction of it, and occasionally because I've made something that might be useful to someone else. This site is where the useful ones end up. Nothing on it is for sale. I'm not a consultant. I have a day job I love. But if something I've built helps you, take it and use it &mdash; that's what it's here for.</p>
+
+        <div class="bio-divider fade-up" aria-hidden="true">&middot; &middot; &middot;</div>
+
+        <p class="fade-up">Outside of work and building, I'm a parent, a partner, and someone who's still learning how to do both of those well. Relationships take reflection, communication takes practice, and I'm not above admitting I'm a work in progress on both counts. A few of the apps here came out of that work too.</p>
+        <p class="fade-up">If you've ended up on this page, welcome. I hope you find something worth your time.</p>
+      </div>
     </div>
   </section>
 
@@ -390,19 +509,20 @@
 
       <div class="app-grid">
         <article class="app fade-up d1">
-          <p class="app-tag">Co-parenting</p>
-          <h3>Tandem</h3>
-          <p class="app-desc">A shared co-parenting calendar — events, tasks, and granular per-category visibility for extended family like grandparents, coaches, and sitters.</p>
-          <p class="app-aside">Built to replace the endless back-and-forth text threads with something calm and structured.</p>
-          <a class="app-link" href="/tandem/" target="_blank" rel="noopener">View prototype <span class="arrow">&rarr;</span></a>
-        </article>
-
-        <article class="app fade-up d2">
           <p class="app-tag">Reflection &amp; communication</p>
           <h3>Showing Up</h3>
-          <p class="app-desc">A daily check-in with reflection prompts, a simple mood log, and a small library of communication tools — STOP, DEAR MAN, GIVE, CBT thought check, repair attempts.</p>
-          <p class="app-aside">Built for my own relationship work — useful for anyone trying to be a calmer, more intentional version of themselves.</p>
+          <p class="app-desc">A daily check-in with reflection prompts, a simple mood log, and a small library of communication tools &mdash; STOP, DEAR MAN, GIVE, CBT thought check, repair attempts.</p>
+          <p class="app-aside">Built for my own relationship work &mdash; useful for anyone trying to be a calmer, more intentional version of themselves.</p>
           <a class="app-link" href="https://showing-up-app.netlify.app" target="_blank" rel="noopener">Open app <span class="arrow">&rarr;</span></a>
+        </article>
+
+        <!-- TODO: update to tandem.mailroute.app when DNS verified -->
+        <article class="app fade-up d2">
+          <p class="app-tag">Co-parenting</p>
+          <h3>Tandem</h3>
+          <p class="app-desc">A shared co-parenting calendar &mdash; events, tasks, and granular per-category visibility for extended family like grandparents, coaches, and sitters.</p>
+          <p class="app-aside">Built to replace the endless back-and-forth text threads with something calm and structured.</p>
+          <a class="app-link" href="https://tandem-693.pages.dev" target="_blank" rel="noopener">Open app <span class="arrow">&rarr;</span></a>
         </article>
 
         <article class="app fade-up d3">
@@ -416,10 +536,29 @@
     </div>
   </section>
 
+  <section class="writing" id="writing">
+    <div class="container">
+      <p class="section-label fade-up">Writing</p>
+      <h2 class="fade-up d1">Things worth writing down.</h2>
+      <p class="lede fade-up d2">Occasional pieces on what I'm thinking about &mdash; AI, building, trades, the work of being a person.</p>
+
+      <ul class="post-list">
+        <li class="post-item fade-up d2">
+          <a class="post-link" href="/writing/why-i-build-small-software/">
+            <p class="post-date">April 16, 2026</p>
+            <h3 class="post-title">Why I build small software</h3>
+            <p class="post-standfirst">On hobby code, AI as a collaborator, and the case for building things that solve exactly one problem.</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <section class="background" id="background">
     <div class="container">
       <p class="section-label fade-up">Background</p>
       <h2 class="fade-up d1">Where I've spent my time.</h2>
+      <p class="bg-lead fade-up d1"><em>Twenty-plus years in the trade. A decade and counting in the classroom. Building software on the side because I can't help myself.</em></p>
 
       <div class="bg-block fade-up d1">
         <p class="bg-heading">Current</p>

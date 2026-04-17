@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Writing &mdash; Mike Kapin</title>
+<meta name="description" content="Occasional pieces by Mike Kapin on AI, building, trades, and the work of being a person." />
+<meta name="theme-color" content="#faf6ef" />
+<meta property="og:title" content="Writing &mdash; Mike Kapin" />
+<meta property="og:description" content="Occasional pieces on AI, building, trades, and the work of being a person." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mikekapin.com/writing/" />
+<link rel="canonical" href="https://mikekapin.com/writing/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23faf6ef'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Georgia,serif' font-size='36' font-style='italic' fill='%232e4a3c'%3Emk%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #faf6ef;
+    --surface: #f3ede1;
+    --ink: #1f1d1a;
+    --ink-soft: #4a4641;
+    --ink-muted: #8a8378;
+    --accent: #2e4a3c;
+    --accent-soft: #3e6250;
+    --rule: rgba(31, 29, 26, 0.08);
+    --rule-strong: rgba(31, 29, 26, 0.16);
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(46, 74, 60, 0.28); transition: border-color .18s ease, color .18s ease; }
+  a:hover { border-bottom-color: var(--accent); color: var(--accent-soft); }
+
+  .container { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; color: var(--ink); letter-spacing: -0.015em; margin: 0; }
+
+  .section-label {
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 1.25rem;
+    font-weight: 500;
+  }
+
+  /* Top bar */
+  .topbar {
+    padding: 2rem 0 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .site-mark {
+    font-family: var(--serif);
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: none;
+  }
+  .site-mark:hover { color: var(--accent); border-bottom: none; }
+  .topbar-nav {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    border-bottom: none;
+    letter-spacing: 0.04em;
+  }
+  .topbar-nav:hover { color: var(--accent); border-bottom: none; }
+
+  /* Page intro */
+  .page-head {
+    padding: 5rem 0 3.5rem;
+  }
+  .page-head h1 {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+  }
+  .page-head .lede {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.15rem;
+    margin: 0;
+    max-width: 56ch;
+    line-height: 1.5;
+  }
+
+  /* Post list */
+  .posts {
+    padding: 0 0 6rem;
+  }
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .post-item {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 0;
+  }
+  .post-item:last-child { border-bottom: 1px solid var(--rule); }
+  .post-link {
+    display: block;
+    border-bottom: none;
+    color: inherit;
+  }
+  .post-link:hover { border-bottom: none; }
+  .post-link:hover .post-title { color: var(--accent); }
+  .post-date {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 0.6rem;
+    font-weight: 500;
+  }
+  .post-title {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    line-height: 1.2;
+    margin: 0 0 0.6rem;
+    color: var(--ink);
+    letter-spacing: -0.012em;
+    transition: color .18s ease;
+  }
+  .post-standfirst {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    max-width: 60ch;
+  }
+
+  /* Footer */
+  footer {
+    padding: 3.5rem 0 4.5rem;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    color: var(--ink-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .disclaimer {
+    max-width: 760px;
+    margin: 0 0 1.5rem;
+    color: var(--ink-soft);
+  }
+  .disclaimer strong { color: var(--ink); font-weight: 500; }
+  .copyright { margin: 0; }
+
+  @media (max-width: 560px) {
+    .page-head { padding: 3.5rem 0 2.5rem; }
+    .posts { padding: 0 0 4rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="site-mark" href="/">Mike Kapin</a>
+      <a class="topbar-nav" href="/">&larr; Home</a>
+    </div>
+  </div>
+
+  <section class="page-head">
+    <div class="container">
+      <p class="section-label">Writing</p>
+      <h1>Things worth writing down.</h1>
+      <p class="lede">Occasional pieces on what I'm thinking about &mdash; AI, building, trades, the work of being a person.</p>
+    </div>
+  </section>
+
+  <section class="posts">
+    <div class="container">
+      <ul class="post-list">
+        <li class="post-item">
+          <a class="post-link" href="/writing/why-i-build-small-software/">
+            <p class="post-date">April 16, 2026</p>
+            <h2 class="post-title">Why I build small software</h2>
+            <p class="post-standfirst">On hobby code, AI as a collaborator, and the case for building things that solve exactly one problem.</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p class="disclaimer"><strong>Professional Disclaimer:</strong> All views and projects presented are personal and do not represent the positions or policies of any employer or institution. All projects are developed on personal time using personal resources and are separate from institutional employment.</p>
+      <p class="copyright">&copy; 2026 Mike Kapin</p>
+    </div>
+  </footer>
+
+</body>
+</html>
