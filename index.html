@@ -220,6 +220,14 @@
   .app-link:hover { color: var(--accent-soft); border-bottom-color: var(--accent-soft); }
   .app-link .arrow { display: inline-block; margin-left: 0.35rem; transition: transform .2s ease; }
   .app-link:hover .arrow { transform: translateX(3px); }
+  .app-link-soon {
+    color: var(--ink-muted);
+    border-bottom: 1px dashed var(--ink-muted);
+    cursor: default;
+    font-style: italic;
+    letter-spacing: 0.01em;
+  }
+  .app-soon .app-tag { opacity: 0.78; }
 
   /* Background */
   .background h2 {
@@ -337,12 +345,12 @@
       <p class="lede fade-up d2">Apps I built for myself. Free to use. No accounts, no tracking, no pitch.</p>
 
       <div class="app-grid">
-        <article class="app fade-up d1">
-          <p class="app-tag">Health &amp; body</p>
-          <h3>Health Tracker</h3>
-          <p class="app-desc">A mobile-first tracker for daily health markers, bloodwork, and trends over time. Charts, a calendar view, and a full history that lives in your own browser.</p>
-          <p class="app-aside">Built for my own optimization work — useful for anyone who wants a private alternative to the paid health-app world.</p>
-          <a class="app-link" href="https://mike-health-tracker.netlify.app" target="_blank" rel="noopener">Open app <span class="arrow">&rarr;</span></a>
+        <article class="app app-soon fade-up d1">
+          <p class="app-tag">Co-parenting</p>
+          <h3>Tandem</h3>
+          <p class="app-desc">A shared co-parenting calendar — events, tasks, and granular per-category visibility for extended family like grandparents, coaches, and sitters.</p>
+          <p class="app-aside">Built to replace the endless back-and-forth text threads with something calm and structured.</p>
+          <span class="app-link app-link-soon">Coming soon</span>
         </article>
 
         <article class="app fade-up d2">
