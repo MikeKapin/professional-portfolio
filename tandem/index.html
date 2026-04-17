@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1a2f3a" />
+<title>Tandem — Co-Parenting, Coordinated</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1d23;
+    --paper: #faf6ef;
+    --warm: #f4ead8;
+    --sage: #5a7a6a;
+    --clay: #c4603c;
+    --sun: #e8b84c;
+    --lavender: #8a7fa8;
+    --slate: #4a5d68;
+    --rose: #d4867a;
+    --border: #d9cfba;
+  }
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .font-display { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+  .phone-frame {
+    width: 390px;
+    height: 780px;
+    background: var(--paper);
+    border-radius: 44px;
+    box-shadow:
+      0 0 0 12px #1a1a1a,
+      0 0 0 14px #2a2a2a,
+      0 30px 80px -20px rgba(15, 29, 35, 0.4),
+      0 10px 30px -10px rgba(15, 29, 35, 0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 30px;
+    background: #1a1a1a;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  .grain {
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(15,29,35,0.08) 1px, transparent 0);
+    background-size: 14px 14px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .scroll-area {
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .scroll-area::-webkit-scrollbar { display: none; }
+
+  .tick { opacity: 0; transform: translateY(8px); animation: tick 0.5s ease-out forwards; }
+  @keyframes tick { to { opacity: 1; transform: translateY(0); } }
+
+  .pulse-dot {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .notch-bg {
+    background: linear-gradient(135deg, #1a2f3a 0%, #2d4a57 100%);
+  }
+
+  /* Marker ink texture on accent headers */
+  .ink-header {
+    background:
+      linear-gradient(180deg, var(--ink) 0%, #1a2f3a 100%);
+    color: var(--paper);
+  }
+
+  .diag-stripes {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 8px,
+      rgba(15,29,35,0.04) 8px,
+      rgba(15,29,35,0.04) 10px
+    );
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    transition: all 0.15s ease;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .category-sport { background: #e8f0e9; color: #3d5a48; }
+  .category-school { background: #f4e6d4; color: #8a5a2a; }
+  .category-medical { background: #f5dcd5; color: #9a4a3a; }
+  .category-birthday { background: #fbecc8; color: #8a6a1a; }
+  .category-custody { background: #e8e2f0; color: #554a7a; }
+
+  .shared-ring {
+    box-shadow: inset 0 0 0 2px var(--sage);
+  }
+
+  .switch {
+    width: 36px; height: 20px; background: #d9cfba; border-radius: 999px;
+    position: relative; cursor: pointer; transition: background 0.2s;
+  }
+  .switch.on { background: var(--sage); }
+  .switch::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; background: white; border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .switch.on::after { transform: translateX(16px); }
+
+  .screen-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    opacity: 0.6;
+  }
+
+  .toast {
+    animation: toast-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+</style>
+</head>
+<body class="grain">
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ---------- SAMPLE DATA ----------
+const FAMILY = {
+  name: "The Chen–Okafor Family",
+  primaryParents: [
+    { id: 'p1', name: 'Laura', role: 'Mom', color: '#c4603c', initial: 'L' },
+    { id: 'p2', name: 'David', role: 'Dad', color: '#5a7a6a', initial: 'D' },
+  ],
+  kids: [
+    { id: 'k1', name: 'Maya', age: 9, color: '#e8b84c' },
+    { id: 'k2', name: 'Theo', age: 6, color: '#8a7fa8' },
+  ],
+  extended: [
+    { id: 'e1', name: 'Grandma Rose', role: 'Maternal GM', initial: 'R', color: '#d4867a', sharing: ['sport', 'birthday'] },
+    { id: 'e2', name: 'Coach Ben', role: 'Soccer coach', initial: 'B', color: '#5a7a6a', sharing: ['sport'] },
+    { id: 'e3', name: 'Uncle Marcus', role: 'Emergency contact', initial: 'M', color: '#4a5d68', sharing: ['custody', 'medical'] },
+  ],
+};
+
+const EVENTS = [
+  { id: 1, title: "Maya — Soccer practice", day: 16, time: "4:30 PM", cat: 'sport', child: 'k1', shared: ['e1', 'e2'], owner: 'p2', loc: 'Riverside Field' },
+  { id: 2, title: "Theo — Dentist", day: 17, time: "10:00 AM", cat: 'medical', child: 'k2', shared: ['e3'], owner: 'p1', loc: "Dr. Patel's office" },
+  { id: 3, title: "Parent-teacher, Maya", day: 18, time: "6:00 PM", cat: 'school', child: 'k1', shared: [], owner: 'p1', loc: 'Oak Grove PS' },
+  { id: 4, title: "Theo turns 7! 🎂", day: 22, time: "All day", cat: 'birthday', child: 'k2', shared: ['e1', 'e3'], owner: 'p1', loc: 'Home' },
+  { id: 5, title: "Custody swap — David", day: 19, time: "5:00 PM", cat: 'custody', child: null, shared: ['e3'], owner: 'p2', loc: 'School pickup' },
+  { id: 6, title: "Maya — Soccer game", day: 20, time: "11:00 AM", cat: 'sport', child: 'k1', shared: ['e1', 'e2'], owner: 'p2', loc: 'Central Park' },
+];
+
+const TASKS = [
+  { id: 1, text: "Buy Theo's birthday cake", assignee: 'p1', due: 'Fri', done: false, from: 'p2' },
+  { id: 2, text: "Pick up soccer cleats (size 3)", assignee: 'p2', due: 'Thu', done: false, from: 'p1' },
+  { id: 3, text: "Sign Maya's field trip form", assignee: 'p1', due: 'Today', done: true, from: 'p1' },
+  { id: 4, text: "Refill Theo's inhaler", assignee: 'p2', due: 'Mon', done: false, from: 'p1' },
+];
+
+const MESSAGES = [
+  { id: 1, from: 'p2', text: "Theo's teacher emailed — reading log is due Friday.", time: "2:14 PM", read: true },
+  { id: 2, from: 'p1', text: "Got it. I'll work with him tonight after soccer.", time: "2:16 PM", read: true },
+  { id: 3, from: 'p2', text: "Also — Rose asked about the game Saturday. She's good to pick up Maya.", time: "2:18 PM", read: true },
+  { id: 4, from: 'p1', text: "Perfect. I shared the game with her calendar.", time: "2:20 PM", read: true },
+  { id: 5, from: 'p2', text: "✓ Shared. She got the notification.", time: "2:21 PM", read: false },
+];
+
+const CAT_LABEL = {
+  sport: { name: 'Sports', class: 'category-sport' },
+  school: { name: 'School', class: 'category-school' },
+  medical: { name: 'Medical', class: 'category-medical' },
+  birthday: { name: 'Birthday', class: 'category-birthday' },
+  custody: { name: 'Custody', class: 'category-custody' },
+};
+
+// ---------- SHARED UI ----------
+const PhoneChrome = ({ user, children, screenName, bgClass = "" }) => (
+  <div className={`phone-frame ${bgClass}`}>
+    <div className="absolute top-0 left-0 right-0 h-12 flex items-end justify-between px-8 pb-1 z-20 text-[11px] font-semibold" style={{ color: 'var(--ink)' }}>
+      <span className="font-mono">9:41</span>
+      <span className="flex gap-1 items-center">
+        <span>●●●</span>
+        <span>󠀠</span>
+        <span>100%</span>
+      </span>
+    </div>
+    <div className="absolute top-12 left-0 right-0 px-5 py-2 flex items-center justify-between z-10">
+      <div className="flex items-center gap-2">
+        <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ background: user.color }}>
+          {user.initial}
+        </div>
+        <span className="text-xs font-medium">{user.name}</span>
+      </div>
+      <span className="screen-label">{screenName}</span>
+    </div>
+    <div className="pt-[88px] h-full scroll-area">
+      {children}
+    </div>
+  </div>
+);
+
+// ---------- SCREEN 1: HOME / DASHBOARD ----------
+const HomeScreen = ({ user }) => {
+  const today = EVENTS.filter(e => e.day === 16);
+  const tomorrow = EVENTS.filter(e => e.day === 17);
+  const myTasks = TASKS.filter(t => t.assignee === user.id && !t.done);
+
+  return (
+    <PhoneChrome user={user} screenName="Home">
+      <div className="px-5 pb-8">
+        <div className="mb-5 tick" style={{ animationDelay: '0.05s' }}>
+          <p className="text-xs uppercase tracking-widest opacity-60 mb-1">Thursday, April 16</p>
+          <h1 className="font-display text-3xl font-light leading-tight">
+            Good morning,<br/>
+            <span className="italic" style={{ color: 'var(--clay)' }}>{user.name}.</span>
+          </h1>
+        </div>
+
+        {/* Live activity banner */}
+        <div className="mb-5 tick rounded-2xl px-4 py-3 flex items-center gap-3" style={{ background: 'var(--warm)', animationDelay: '0.1s' }}>
+          <div className="w-2 h-2 rounded-full pulse-dot" style={{ background: 'var(--sage)' }}></div>
+          <div className="flex-1">
+            <p className="text-xs font-medium">David updated soccer practice — <span className="opacity-60">2 min ago</span></p>
+          </div>
+          <i data-lucide="chevron-right" className="w-4 h-4 opacity-40"></i>
+        </div>
+
+        {/* Today */}
+        <div className="mb-5 tick" style={{ animationDelay: '0.15s' }}>
+          <div className="flex items-baseline justify-between mb-2">
+            <h2 className="font-display text-lg font-medium">Today</h2>
+            <span className="text-xs opacity-50">{today.length} events</span>
+          </div>
+          <div className="space-y-2">
+            {today.map(e => <EventCard key={e.id} event={e} />)}
+          </div>
+        </div>
+
+        {/* Tasks */}
+        <div className="mb-5 tick" style={{ animationDelay: '0.2s' }}>
+          <div className="flex items-baseline justify-between mb-2">
+            <h2 className="font-display text-lg font-medium">Honey-do</h2>
+            <span className="text-xs opacity-50">{myTasks.length} for you</span>
+          </div>
+          <div className="rounded-2xl border" style={{ borderColor: 'var(--border)' }}>
+            {myTasks.slice(0, 2).map((t, i) => (
+              <div key={t.id} className={`flex items-center gap-3 p-3 ${i < myTasks.length - 1 ? 'border-b' : ''}`} style={{ borderColor: 'var(--border)' }}>
+                <div className="w-5 h-5 rounded-md border-2" style={{ borderColor: 'var(--ink)' }}></div>
+                <div className="flex-1">
+                  <p className="text-sm">{t.text}</p>
+                  <p className="text-[10px] opacity-50 mt-0.5">From {t.from === 'p1' ? 'Laura' : 'David'} · Due {t.due}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tomorrow preview */}
+        <div className="mb-5 tick" style={{ animationDelay: '0.25s' }}>
+          <h2 className="font-display text-lg font-medium mb-2">Tomorrow</h2>
+          <div className="space-y-2">
+            {tomorrow.map(e => <EventCard key={e.id} event={e} compact />)}
+          </div>
+        </div>
+      </div>
+    </PhoneChrome>
+  );
+};
+
+const EventCard = ({ event, compact }) => {
+  const cat = CAT_LABEL[event.cat];
+  const sharedCount = event.shared.length;
+  return (
+    <div className={`rounded-2xl p-3 bg-white border ${sharedCount > 0 ? 'shared-ring' : ''}`} style={{ borderColor: 'var(--border)' }}>
+      <div className="flex items-start gap-3">
+        <div className="flex-shrink-0 text-center pt-0.5">
+          <p className="font-mono text-[10px] opacity-60">{event.time.split(' ')[0]}</p>
+          <p className="font-mono text-[9px] opacity-40">{event.time.split(' ')[1]}</p>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium leading-tight">{event.title}</p>
+          {!compact && <p className="text-xs opacity-60 mt-0.5">{event.loc}</p>}
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span className={`chip ${cat.class}`}>{cat.name}</span>
+            {sharedCount > 0 && (
+              <span className="chip" style={{ background: '#e8f0e9', color: '#3d5a48' }}>
+                <i data-lucide="users" className="w-2.5 h-2.5"></i> +{sharedCount}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- SCREEN 2: CALENDAR ----------
+const CalendarScreen = ({ user }) => {
+  const daysInMonth = 30;
+  const firstDay = 2; // Tue start for April 1
+
+  return (
+    <PhoneChrome user={user} screenName="Calendar">
+      <div className="px-5 pb-8">
+        <div className="flex items-baseline justify-between mb-4 tick">
+          <h1 className="font-display text-3xl font-light">April<span className="italic opacity-50"> 2026</span></h1>
+          <div className="flex gap-1">
+            <button className="w-8 h-8 rounded-full border flex items-center justify-center" style={{ borderColor: 'var(--border)' }}>
+              <i data-lucide="chevron-left" className="w-4 h-4"></i>
+            </button>
+            <button className="w-8 h-8 rounded-full border flex items-center justify-center" style={{ borderColor: 'var(--border)' }}>
+              <i data-lucide="chevron-right" className="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        {/* Filter chips */}
+        <div className="flex gap-1.5 mb-4 overflow-x-auto scroll-area tick" style={{ animationDelay: '0.05s' }}>
+          <span className="chip btn-primary" style={{ background: 'var(--ink)', color: 'var(--paper)' }}>All</span>
+          {Object.entries(CAT_LABEL).map(([k, v]) => (
+            <span key={k} className={`chip ${v.class} whitespace-nowrap`}>{v.name}</span>
+          ))}
+        </div>
+
+        {/* Mini grid */}
+        <div className="grid grid-cols-7 gap-1 mb-5 tick" style={{ animationDelay: '0.1s' }}>
+          {['S','M','T','W','T','F','S'].map((d,i) => (
+            <div key={i} className="text-center text-[10px] font-mono opacity-50 pb-1">{d}</div>
+          ))}
+          {Array.from({length: firstDay}).map((_,i) => <div key={`e${i}`}></div>)}
+          {Array.from({length: daysInMonth}).map((_,i) => {
+            const day = i + 1;
+            const dayEvents = EVENTS.filter(e => e.day === day);
+            const isToday = day === 16;
+            return (
+              <div key={day} className={`aspect-square rounded-lg flex flex-col items-center justify-center relative text-xs
+                ${isToday ? 'bg-[var(--ink)] text-white' : ''}`}>
+                <span className={isToday ? 'font-bold' : ''}>{day}</span>
+                {dayEvents.length > 0 && (
+                  <div className="flex gap-0.5 mt-0.5">
+                    {dayEvents.slice(0, 3).map(e => (
+                      <div key={e.id} className="w-1 h-1 rounded-full" style={{
+                        background: e.cat === 'sport' ? '#5a7a6a' :
+                                    e.cat === 'school' ? '#c4603c' :
+                                    e.cat === 'medical' ? '#d4867a' :
+                                    e.cat === 'birthday' ? '#e8b84c' : '#8a7fa8'
+                      }}></div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Upcoming list */}
+        <div className="tick" style={{ animationDelay: '0.15s' }}>
+          <h2 className="font-display text-lg font-medium mb-2">Coming up</h2>
+          <div className="space-y-2">
+            {EVENTS.map(e => <EventCard key={e.id} event={e} />)}
+          </div>
+        </div>
+      </div>
+
+      {/* FAB */}
+      <button className="absolute bottom-6 right-5 w-14 h-14 rounded-full btn-primary flex items-center justify-center shadow-xl">
+        <i data-lucide="plus" className="w-6 h-6"></i>
+      </button>
+    </PhoneChrome>
+  );
+};
+
+// ---------- SCREEN 3: EVENT DETAIL + SHARING ----------
+const EventDetailScreen = ({ user }) => {
+  const event = EVENTS[0];
+  const [sharing, setSharing] = useState({ e1: true, e2: true, e3: false });
+
+  return (
+    <PhoneChrome user={user} screenName="Share">
+      <div className="px-5 pb-8">
+        <button className="flex items-center gap-1 text-xs mb-3 opacity-60">
+          <i data-lucide="chevron-left" className="w-3 h-3"></i> Back
+        </button>
+
+        <div className="mb-5 tick">
+          <span className={`chip ${CAT_LABEL[event.cat].class} mb-2`}>{CAT_LABEL[event.cat].name}</span>
+          <h1 className="font-display text-2xl font-medium leading-tight mt-2">{event.title}</h1>
+        </div>
+
+        <div className="rounded-2xl bg-white border p-4 mb-4 tick" style={{ borderColor: 'var(--border)', animationDelay: '0.05s' }}>
+          <div className="flex gap-3 items-start">
+            <i data-lucide="calendar" className="w-4 h-4 mt-0.5 opacity-60"></i>
+            <div>
+              <p className="text-sm font-medium">Thursday, April 16</p>
+              <p className="text-xs opacity-60">4:30 PM — 6:00 PM</p>
+            </div>
+          </div>
+          <div className="border-t my-3" style={{ borderColor: 'var(--border)' }}></div>
+          <div className="flex gap-3 items-start">
+            <i data-lucide="map-pin" className="w-4 h-4 mt-0.5 opacity-60"></i>
+            <p className="text-sm">Riverside Field, Pitch 3</p>
+          </div>
+          <div className="border-t my-3" style={{ borderColor: 'var(--border)' }}></div>
+          <div className="flex gap-3 items-start">
+            <i data-lucide="user" className="w-4 h-4 mt-0.5 opacity-60"></i>
+            <p className="text-sm">Maya (9)</p>
+          </div>
+        </div>
+
+        {/* SHARING — the crux feature */}
+        <div className="tick" style={{ animationDelay: '0.1s' }}>
+          <div className="flex items-baseline justify-between mb-2">
+            <h2 className="font-display text-lg font-medium">Who can see this</h2>
+            <span className="text-[10px] font-mono opacity-50 uppercase tracking-wider">Granular</span>
+          </div>
+
+          <div className="rounded-2xl bg-white border overflow-hidden" style={{ borderColor: 'var(--border)' }}>
+            {/* Co-parents — always */}
+            <div className="px-4 py-3 diag-stripes flex items-center gap-3">
+              <div className="flex -space-x-1.5">
+                {FAMILY.primaryParents.map(p => (
+                  <div key={p.id} className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold border-2 border-white" style={{ background: p.color }}>
+                    {p.initial}
+                  </div>
+                ))}
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium">Laura & David</p>
+                <p className="text-[10px] opacity-60">Co-parents · always shared</p>
+              </div>
+              <i data-lucide="lock" className="w-3.5 h-3.5 opacity-40"></i>
+            </div>
+
+            {/* Extended circle */}
+            {FAMILY.extended.map((e, i) => {
+              const canSee = e.sharing.includes(event.cat);
+              return (
+                <div key={e.id} className={`px-4 py-3 flex items-center gap-3 ${i < FAMILY.extended.length - 1 ? 'border-b' : ''}`} style={{ borderColor: 'var(--border)' }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ background: e.color }}>
+                    {e.initial}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">{e.name}</p>
+                    <p className="text-[10px] opacity-60">{e.role} · sees: {e.sharing.join(', ')}</p>
+                  </div>
+                  <div
+                    className={`switch ${sharing[e.id] && canSee ? 'on' : ''}`}
+                    onClick={() => canSee && setSharing(s => ({...s, [e.id]: !s[e.id]}))}
+                    style={{ opacity: canSee ? 1 : 0.3 }}
+                  ></div>
+                </div>
+              );
+            })}
+          </div>
+
+          <button className="mt-3 w-full text-xs py-2.5 rounded-full border flex items-center justify-center gap-1.5" style={{ borderColor: 'var(--border)' }}>
+            <i data-lucide="plus" className="w-3.5 h-3.5"></i> Invite someone new
+          </button>
+        </div>
+
+        {/* Notification hint */}
+        <div className="mt-4 px-4 py-3 rounded-xl flex gap-2 items-start tick" style={{ background: 'var(--warm)', animationDelay: '0.15s' }}>
+          <i data-lucide="bell" className="w-4 h-4 mt-0.5" style={{ color: 'var(--clay)' }}></i>
+          <p className="text-xs leading-relaxed">
+            Grandma Rose and Coach Ben will get a push notification about this event.
+          </p>
+        </div>
+      </div>
+    </PhoneChrome>
+  );
+};
+
+// ---------- SCREEN 4: MESSENGER ----------
+const MessengerScreen = ({ user }) => {
+  const other = FAMILY.primaryParents.find(p => p.id !== user.id);
+
+  return (
+    <PhoneChrome user={user} screenName="Thread">
+      <div className="px-5 pb-4 border-b sticky top-0 z-10" style={{ background: 'var(--paper)', borderColor: 'var(--border)' }}>
+        <div className="flex items-center gap-3 tick">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold" style={{ background: other.color }}>
+            {other.initial}
+          </div>
+          <div className="flex-1">
+            <p className="font-medium text-sm">{other.name}</p>
+            <p className="text-[10px] opacity-60 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--sage)' }}></span>
+              Online
+            </p>
+          </div>
+          <button className="w-8 h-8 rounded-full border flex items-center justify-center" style={{ borderColor: 'var(--border)' }}>
+            <i data-lucide="info" className="w-4 h-4"></i>
+          </button>
+        </div>
+
+        {/* Topic chips */}
+        <div className="flex gap-1.5 mt-3 overflow-x-auto scroll-area">
+          <span className="chip whitespace-nowrap" style={{ background: 'var(--ink)', color: 'var(--paper)' }}>General</span>
+          <span className="chip whitespace-nowrap" style={{ background: '#fbecc8', color: '#8a6a1a' }}># Maya</span>
+          <span className="chip whitespace-nowrap" style={{ background: '#e8e2f0', color: '#554a7a' }}># Theo</span>
+          <span className="chip whitespace-nowrap" style={{ background: '#e8f0e9', color: '#3d5a48' }}># Logistics</span>
+        </div>
+      </div>
+
+      <div className="px-5 py-4 space-y-3">
+        {MESSAGES.map((m, i) => {
+          const isMine = m.from === user.id;
+          return (
+            <div key={m.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'} tick`} style={{ animationDelay: `${i * 0.05}s` }}>
+              <div className={`max-w-[75%] px-3.5 py-2 rounded-2xl text-sm ${isMine ? 'rounded-br-md' : 'rounded-bl-md'}`}
+                style={{
+                  background: isMine ? 'var(--ink)' : 'white',
+                  color: isMine ? 'var(--paper)' : 'var(--ink)',
+                  border: isMine ? 'none' : '1px solid var(--border)',
+                }}>
+                <p className="leading-snug">{m.text}</p>
+                <p className={`text-[9px] mt-1 ${isMine ? 'opacity-50' : 'opacity-40'}`}>{m.time}</p>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Inline event card in thread */}
+        <div className="tick" style={{ animationDelay: '0.3s' }}>
+          <div className="max-w-[80%] rounded-2xl p-3 bg-white border shared-ring" style={{ borderColor: 'var(--border)' }}>
+            <p className="text-[9px] font-mono opacity-50 uppercase tracking-wider mb-1">Event shared</p>
+            <p className="text-sm font-medium">Maya — Soccer game</p>
+            <p className="text-xs opacity-60 mt-0.5">Sat · 11:00 AM · Central Park</p>
+            <div className="flex gap-1 mt-2">
+              <span className="chip category-sport">Sports</span>
+              <span className="chip" style={{ background: '#e8f0e9', color: '#3d5a48' }}>
+                <i data-lucide="users" className="w-2.5 h-2.5"></i> Rose
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Composer */}
+      <div className="sticky bottom-0 px-4 py-3 border-t flex items-center gap-2" style={{ background: 'var(--paper)', borderColor: 'var(--border)' }}>
+        <button className="w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0" style={{ borderColor: 'var(--border)' }}>
+          <i data-lucide="plus" className="w-4 h-4"></i>
+        </button>
+        <input type="text" placeholder="Message David…" className="flex-1 bg-white border rounded-full px-4 py-2 text-sm outline-none" style={{ borderColor: 'var(--border)' }} />
+        <button className="w-8 h-8 rounded-full btn-primary flex items-center justify-center flex-shrink-0">
+          <i data-lucide="arrow-up" className="w-4 h-4"></i>
+        </button>
+      </div>
+    </PhoneChrome>
+  );
+};
+
+// ---------- SCREEN 5: GRANDMA'S VIEW ----------
+const GrandmaScreen = () => {
+  const user = FAMILY.extended[0]; // Rose
+  const visibleEvents = EVENTS.filter(e => e.shared.includes('e1'));
+
+  return (
+    <PhoneChrome user={user} screenName="Grandma's view" bgClass="bg-[#fbf7ef]">
+      <div className="px-5 pb-8">
+        <div className="mb-5 tick">
+          <p className="text-xs uppercase tracking-widest opacity-60 mb-1">Shared with you</p>
+          <h1 className="font-display text-3xl font-light leading-tight">
+            Maya &amp; Theo's<br/>
+            <span className="italic" style={{ color: 'var(--clay)' }}>week ahead</span>
+          </h1>
+        </div>
+
+        {/* What she can see */}
+        <div className="mb-5 tick rounded-2xl p-4 flex gap-3 items-start" style={{ background: 'white', border: '1px solid var(--border)', animationDelay: '0.05s' }}>
+          <i data-lucide="eye" className="w-4 h-4 mt-0.5 opacity-60"></i>
+          <div className="flex-1">
+            <p className="text-xs font-medium">You can see:</p>
+            <div className="flex gap-1.5 mt-1.5 flex-wrap">
+              <span className="chip category-sport">Sports</span>
+              <span className="chip category-birthday">Birthdays</span>
+            </div>
+            <p className="text-[10px] opacity-60 mt-2">Shared by Laura & David · <button className="underline">Request more</button></p>
+          </div>
+        </div>
+
+        <div className="space-y-2 tick" style={{ animationDelay: '0.1s' }}>
+          {visibleEvents.map(e => (
+            <div key={e.id} className="rounded-2xl p-3 bg-white border" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-10 text-center pt-0.5">
+                  <p className="font-display text-lg leading-none">{e.day}</p>
+                  <p className="font-mono text-[9px] opacity-50 uppercase">Apr</p>
+                </div>
+                <div className="flex-1 min-w-0 border-l pl-3" style={{ borderColor: 'var(--border)' }}>
+                  <p className="text-sm font-medium leading-tight">{e.title}</p>
+                  <p className="text-xs opacity-60 mt-0.5">{e.time} · {e.loc}</p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className={`chip ${CAT_LABEL[e.cat].class}`}>{CAT_LABEL[e.cat].name}</span>
+                    <button className="text-[10px] underline opacity-70">Add to my calendar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 tick rounded-2xl p-4" style={{ background: 'var(--warm)', animationDelay: '0.15s' }}>
+          <p className="text-xs font-medium mb-1">💌 Send a note?</p>
+          <p className="text-[11px] opacity-70 leading-relaxed">You can message Laura or David from here, but you won't see the rest of their calendar.</p>
+        </div>
+      </div>
+    </PhoneChrome>
+  );
+};
+
+// ---------- SCREEN 6: NOTIFICATION / PERMISSIONS ----------
+const NotificationScreen = ({ user }) => (
+  <PhoneChrome user={user} screenName="Notifs">
+    <div className="px-5 pb-8">
+      <h1 className="font-display text-3xl font-light mb-5 tick">Notifications</h1>
+
+      {/* Toast */}
+      <div className="mb-5 toast rounded-2xl p-4 notch-bg text-white">
+        <div className="flex gap-3 items-start">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(255,255,255,0.15)' }}>
+            <i data-lucide="calendar-plus" className="w-4 h-4"></i>
+          </div>
+          <div className="flex-1">
+            <p className="text-xs opacity-70 font-mono uppercase tracking-wider mb-0.5">Just now · Tandem</p>
+            <p className="text-sm font-medium">David added a new event</p>
+            <p className="text-xs opacity-80 mt-0.5">Maya — Soccer game · Saturday 11 AM</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-2 tick" style={{ animationDelay: '0.1s' }}>
+        {[
+          { icon: 'edit-3', who: 'David', what: 'changed soccer practice time', when: '2m', cat: 'sport' },
+          { icon: 'user-plus', who: 'Rose', what: 'accepted calendar share', when: '1h', cat: 'birthday' },
+          { icon: 'check-circle', who: 'David', what: 'completed "pick up cleats"', when: '3h', cat: 'custody' },
+          { icon: 'message-circle', who: 'David', what: 'sent a message', when: '4h', cat: 'school' },
+          { icon: 'bell', who: 'Reminder', what: 'Theo\'s dentist tomorrow', when: 'Yesterday', cat: 'medical' },
+        ].map((n, i) => (
+          <div key={i} className="rounded-2xl p-3 bg-white border flex gap-3 items-center" style={{ borderColor: 'var(--border)' }}>
+            <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${CAT_LABEL[n.cat].class}`}>
+              <i data-lucide={n.icon} className="w-4 h-4"></i>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm"><span className="font-medium">{n.who}</span> {n.what}</p>
+              <p className="text-[10px] opacity-50 mt-0.5">{n.when}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Settings preview */}
+      <div className="mt-6 tick" style={{ animationDelay: '0.2s' }}>
+        <h2 className="font-display text-lg font-medium mb-2">Alert me about</h2>
+        <div className="rounded-2xl bg-white border overflow-hidden" style={{ borderColor: 'var(--border)' }}>
+          {[
+            { label: 'Calendar changes', on: true },
+            { label: 'New tasks assigned to me', on: true },
+            { label: 'Messages', on: true },
+            { label: 'Event reminders (24h before)', on: true },
+            { label: 'Extended family activity', on: false },
+          ].map((s, i, arr) => (
+            <div key={i} className={`px-4 py-3 flex items-center justify-between ${i < arr.length - 1 ? 'border-b' : ''}`} style={{ borderColor: 'var(--border)' }}>
+              <p className="text-sm">{s.label}</p>
+              <div className={`switch ${s.on ? 'on' : ''}`}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </PhoneChrome>
+);
+
+// ---------- MAIN APP ----------
+const App = () => {
+  const laura = FAMILY.primaryParents[0];
+  const david = FAMILY.primaryParents[1];
+
+  useEffect(() => {
+    if (window.lucide) window.lucide.createIcons();
+  });
+
+  const screens = [
+    { title: "Home — Laura", sub: "Shared dashboard, live updates", el: <HomeScreen user={laura} /> },
+    { title: "Shared Calendar", sub: "Color-coded by category, both parents edit", el: <CalendarScreen user={david} /> },
+    { title: "Event Sharing", sub: "Grandma sees soccer, not custody", el: <EventDetailScreen user={laura} /> },
+    { title: "Co-parent Messenger", sub: "Topic-threaded, event-aware", el: <MessengerScreen user={david} /> },
+    { title: "Grandma's View", sub: "Filtered to what she's allowed", el: <GrandmaScreen /> },
+    { title: "Push & Permissions", sub: "Realtime alerts, granular controls", el: <NotificationScreen user={laura} /> },
+  ];
+
+  return (
+    <div className="min-h-screen py-16 px-8">
+      {/* Hero */}
+      <div className="max-w-5xl mx-auto mb-16">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-10 h-10 rounded-xl ink-header flex items-center justify-center">
+            <span className="font-display text-xl text-white italic">t</span>
+          </div>
+          <div>
+            <p className="font-display text-lg font-medium leading-none">Tandem</p>
+            <p className="text-[10px] font-mono uppercase tracking-widest opacity-60">Prototype · v0.1</p>
+          </div>
+        </div>
+
+        <h1 className="font-display text-6xl md:text-7xl font-light leading-none mb-6 max-w-3xl">
+          Co-parenting,<br/>
+          <span className="italic" style={{ color: 'var(--clay)' }}>coordinated.</span>
+        </h1>
+
+        <p className="max-w-2xl text-lg leading-relaxed opacity-80 mb-8">
+          One shared calendar. Two editing parents. A circle of family that sees only what you invite them to.
+          Push notifications, honey-do lists, and a messenger that understands context — built as a PWA so it
+          installs like an app without the app store.
+        </p>
+
+        <div className="flex gap-2 flex-wrap">
+          {['Shared calendar', 'Granular sharing', 'Push notifications', 'Threaded messenger', 'Honey-do lists', 'Offline-first PWA'].map(t => (
+            <span key={t} className="chip" style={{ background: 'white', border: '1px solid var(--border)', color: 'var(--ink)' }}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Screens */}
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 justify-items-center">
+          {screens.map((s, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <div className="mb-4 text-center">
+                <p className="font-mono text-[10px] uppercase tracking-widest opacity-50 mb-1">Screen {String(i + 1).padStart(2, '0')}</p>
+                <h3 className="font-display text-xl font-medium">{s.title}</h3>
+                <p className="text-xs opacity-60 mt-0.5">{s.sub}</p>
+              </div>
+              {s.el}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="max-w-5xl mx-auto mt-24 pt-8 border-t" style={{ borderColor: 'var(--border)' }}>
+        <p className="font-mono text-[10px] uppercase tracking-widest opacity-50">Prototype brief · ready for Claude Code handoff</p>
+      </div>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
